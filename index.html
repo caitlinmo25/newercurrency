@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Currency Converter</title>
+    <script type="text/javascript">
+        // Function to check for non-negative numbers
+        function validateForm() {
+            var amount = document.getElementById('amount').value;
+            if (amount < 0) {
+                alert("Negative numbers are not allowed");
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <form action="/" method="post" onsubmit="return validateForm();">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.from_currency.label }}: {{ form.from_currency(id='from_currency') }}
+        </div>
+        <div>
+            {{ form.to_currency.label }}: {{ form.to_currency(id='to_currency') }}
+        </div>
+        <div>
+            {{ form.amount.label }}: {{ form.amount(id='amount') }} <!-- Add ID attribute for JS -->
+        </div>
+        <button type="submit">Convert</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class={{ category }}>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
